@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,20 +14,20 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import Model.Libros;
+import Utils.escribirLeer;
 
 public class ventanaMenu extends JFrame{
 	public ventanaMenu() {
 		
-		//Falta el filtro de la tabla de listar los libros por generos
-		//Falta que los botones del JMenuBar(Xml y binario) funcionen, 
-		//y crear su respectiva ventana que seria una tabla que muestra los datos.
-		
 		JPanel panelBorder = new JPanel(new BorderLayout());
 		JPanel panelGrid = new JPanel(new GridLayout(2, 2));
-		JPanel panelGrid2 = new JPanel(new GridLayout(2, 1));
+		JPanel panelGrid2 = new JPanel(new GridLayout(2, 1)); //Este grid es para poner el jmenubar y el titulo 
 		
 		panelBorder.add(panelGrid, BorderLayout.CENTER);
-		panelBorder.add(panelGrid2, BorderLayout.NORTH); //Este grid es para poner el jmenubar y el titulo de debajo
+		panelBorder.add(panelGrid2, BorderLayout.NORTH); 
 		
 		Font fuente = new Font("Arial", Font.BOLD, 17);
 		
@@ -35,29 +35,46 @@ public class ventanaMenu extends JFrame{
 		JMenuBar mb = new JMenuBar();
 		JMenu opciones = new JMenu("Ajustes");
 		
-		JMenuItem cXML = new JMenuItem("Cargar XML");
-		JMenuItem cBinario = new JMenuItem("Cargar Binario");
+		JMenuItem cargarXML = new JMenuItem("Cargar XML");
+		JMenuItem cargarBinario = new JMenuItem("Cargar Binario");
+		JMenuItem crearBinarioLibros = new JMenuItem("Crear Binario Libros");
 		
 		mb.add(opciones);
-		opciones.add(cXML);
-		opciones.add(cBinario);
+		opciones.add(cargarXML);
+		opciones.add(cargarBinario);
+		opciones.add(crearBinarioLibros);
 		
 		panelGrid2.add(mb);
 		
-		cXML.addActionListener(new ActionListener() {
+		cargarXML.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String[] cols = {"id", "titulua", "generoa", "urtea"};
+				String ficheroXML = "Ficheros/liburuak.xml";
+				ArrayList<Libros> lList = escribirLeer.leerXML(ficheroXML);
 				
-				
+				ventanaTablaXMLyBinario vtxb = new ventanaTablaXMLyBinario(cols, lList);
 			}
 		});
 		
-		cBinario.addActionListener(new ActionListener() {
+		cargarBinario.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String[] cols = {"codigo", "titulo", "genero", "anio"};
+				String ficheroBinario = "Ficheros/Generados/libros.bin";
+				ArrayList<Libros> lList = escribirLeer.leerBinario(ficheroBinario);
 				
+				ventanaTablaXMLyBinario vtxb = new ventanaTablaXMLyBinario(cols, lList);
+			}
+		});
+		
+		crearBinarioLibros.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				escribirLeer.crearBinarioLibros();
 				
 			}
 		});
