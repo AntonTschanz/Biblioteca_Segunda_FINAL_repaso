@@ -53,8 +53,9 @@ public class escribirLeer {
 	}
 	
 	//BINARIOS
+	//Método para crear el archivo binario que contiene una lista de objetos Libros
 	public static void crearBinarioLibros() {
-		ArrayList<Libros> lList = LibrosConnect.getLibros();
+		ArrayList<Libros> lList = LibrosConnect.getLibros(); //Lista de los libros
 		
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("Ficheros/Generados/libros.bin")))) {
 			oos.writeObject(lList);
@@ -68,11 +69,13 @@ public class escribirLeer {
 	
 	}
 	
+	 // Método para leer un archivo binario y devolver un ArrayList de Libros
 	public static ArrayList<Libros> leerBinario(String ficheroBinario){
 		ArrayList<Libros> lList = new ArrayList<Libros>();
 		
 		try {
-			File f = new File(ficheroBinario);
+			// Objeto File que representa el archivo binario, si quieres puedes poner directamente la ruta al archivo entre ""
+			File f = new File(ficheroBinario);  
 			FileInputStream fis = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			
