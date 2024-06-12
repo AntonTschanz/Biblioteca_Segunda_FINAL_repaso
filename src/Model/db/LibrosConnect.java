@@ -45,4 +45,28 @@ public class LibrosConnect {
 			System.err.println("Error en insertLibro()");
 		}
 	}
+	
+	public static ArrayList<Libros> getLibrosXgenero(String xgenero){
+		ArrayList<Libros> lList = new ArrayList<Libros>();
+		Connection con = Controller.conexion();
+		
+		try {
+			Statement st = con.createStatement();
+			String sql = "SELECT * FROM libros WHERE genero = '" + xgenero + "'";
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int codigo = rs.getInt("codigo");
+				String titulo = rs.getString("titulo");
+				String genero = rs.getString("genero");
+				int anio = rs.getInt("anio");
+				Libros l = new Libros(codigo, titulo, genero, anio);
+				lList.add(l);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Error en getLibrosXgenero()");
+		}
+		
+		return lList;
+	}
 }
