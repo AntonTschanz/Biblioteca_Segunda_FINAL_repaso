@@ -1,7 +1,7 @@
 package Model;
 
 import java.io.Serializable;
-
+//Hay que agregar el "implements Serializable" si queremos trabajar con los ficheros binarios.
 public class Libros implements Serializable{
 	private int codigo;
 	private String titulo;
