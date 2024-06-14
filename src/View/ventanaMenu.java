@@ -64,6 +64,7 @@ public class ventanaMenu extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String[] cols = {"codigo", "titulo", "genero", "anio"};
 				String ficheroBinario = "Ficheros/Generados/libros.bin";
+//				String ficheroBinario = "Ficheros/liburuak.bin";
 				ArrayList<Libros> lList = escribirLeer.leerBinario(ficheroBinario);
 				
 				ventanaTablaXMLyBinario vtxb = new ventanaTablaXMLyBinario(cols, lList);
